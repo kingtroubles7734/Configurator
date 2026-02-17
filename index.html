@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom Bathroom Partitions - Configurator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
+  <style>
+    body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
+    .progress { height: 10px; margin-bottom: 2rem; }
+    .progress-bar { background: #0d6efd; }
+    .card { border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden; transition: transform 0.2s; }
+    .card:hover { transform: scale(1.02); }
+    .btn-layout, .swatch { cursor: pointer; }
+    .selected { border: 3px solid #0d6efd !important; box-shadow: 0 0 15px rgba(13,110,253,0.5); }
+    .hero { background: linear-gradient(135deg, #0d6efd, #0a58ca); color: white; padding: 5rem 1rem; text-align: center; }
+    .hero-small { background: #0d6efd; color: white; padding: 2rem 1rem; text-align: center; }
+    .form-label { font-weight: 500; color: #333; }
+    #previewCanvas { border: 2px solid #0d6efd; background: #e9f5ff; border-radius: 8px; }
+    .swatch { width: 60px; height: 60px; border: 2px solid #ddd; border-radius: 6px; margin: 4px; }
+    .summary-box { background: #e9f5ff; border: 1px solid #0d6efd; border-radius: 8px; padding: 1.5rem; }
+  </style>
+</head>
+<body>
+
+<!-- STEP 1: Fixtures & Contact -->
+<div id="step1" class="hero">
+  <div class="container">
+    <h1>Design Your Perfect Restroom</h1>
+    <p class="lead mb-4">Fast quotes. ADA-compliant. Built for your space.</p>
+    <button onclick="showStep(2)" class="btn btn-light btn-lg">Get Started →</button>
+  </div>
+</div>
+
+<div id="step2" class="container mt-5 d-none">
+  <div class="progress"><div class="progress-bar" style="width: 25%;"></div></div>
+  <div class="d-flex justify-content-between mb-3"><small>1. Fixtures</small><strong>2. Layout</strong><small>3. Dimensions</small><small>4. Quote</small></div>
+  <div class="hero-small mb-4"><h2>Select Your Restroom Layout</h2><p>Choose the configuration that best matches your space.</p></div>
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="mb-4">
+        <label class="form-label fw-bold">Name your room (optional)</label>
+        <input type="text" class="form-control form-control-lg" id="roomName" placeholder="e.g., Main Floor Restroom"/>
+      </div>
+      <h4 class="text-center mb-4">Pick a Layout Style</h4>
+      <div class="row g-4">
+        <div class="col-md-6 col-lg-4"><button class="btn-layout w-100" data-layout="straight"><div class="card"><img src="https://via.placeholder.com/400x180?text=Straight+Row" class="card-img-top" alt="Straight"><div class="card-body text-center"><h5>Straight Row</h5><p class="text-muted">Simple linear setup</p></div></div></button></div>
+        <div class="col-md-6 col-lg-4"><button class="btn-layout w-100" data-layout="l-shape"><div class="card"><img src="https://via.placeholder.com/400x180?text=L-Shape" class="card-img-top" alt="L"><div class="card-body text-center"><h5>L-Shape</h5><p class="text-muted">Corner-friendly</p></div></div></button></div>
+        <div class="col-md-6 col-lg-4"><button class="btn-layout w-100" data-layout="u-shape"><div class="card"><img src="https://via.placeholder.com/400x180?text=U-Shape" class="card-img-top" alt="U"><div class="card-body text-center"><h5>U-Shape</h5><p class="text-muted">Max fixtures</p></div></div></button></div>
+        <div class="col-md-6 col-lg-4"><button class="btn-layout w-100" data-layout="ada"><div class="card"><img src="https://via.placeholder.com/400x180?text=ADA" class="card-img-top" alt="ADA"><div class="card-body text-center"><h5>ADA / Opposite</h5><p class="text-muted">Compliant setups</p></div></div></button></div>
+      </div>
+      <div class="d-flex justify-content-between mt-5">
+        <button onclick="showStep(1)" class="btn btn-outline-secondary btn-lg">Back</button>
+        <button id="next2" class="btn btn-primary btn-lg" disabled onclick="saveStep2();showStep(3)">Next: Dimensions →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="step3" class="container mt-5 d-none">
+  <div class="progress"><div class="progress-bar" style="width: 50%;"></div></div>
+  <div class="d-flex justify-content-between mb-3"><small>1. Fixtures</small><small>2. Layout</small><strong>3. Dimensions</strong><small>4. Quote</small></div>
+  <div class="hero-small mb-4"><h2>Customize Dimensions</h2><p>Enter measurements—preview updates live.</p></div>
+  <div class="row">
+    <div class="col-lg-6">
+      <div class="card p-4">
+        <h4>Room & Settings</h4>
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label">Room Length (in)</label><input type="number" class="form-control" id="roomLength" value="120" min="60"/></div>
+          <div class="col-md-6"><label class="form-label">Room Width (in)</label><input type="number" class="form-control" id="roomWidth" value="96" min="60"/></div>
+        </div>
+        <div class="mt-3 form-check"><input type="checkbox" class="form-check-input" id="adaCheck" checked/><label class="form-check-label">ADA Compliant</label></div>
+        <hr/>
+        <h5>Stall (example)</h5>
+        <div class="row g-3">
+          <div class="col-md-6"><label class="form-label">Width (in)</label><input type="number" class="form-control stall-width" value="36"/></div>
+          <div class="col-md-6"><label class="form-label">Depth (in)</label><input type="number" class="form-control stall-depth" value="60"/></div>
+          <div class="col-md-6"><label class="form-label">Door Swing</label><select class="form-select"><option>In</option><option>Out</option></select></div>
+          <div class="col-md-6"><label class="form-label">Toilet Offset</label><input type="number" class="form-control" id="toiletOffset" value="12"/></div>
+        </div>
+        <div class="text-center mt-4"><button onclick="saveStep3();showStep(4)" class="btn btn-primary btn-lg">Next: Materials →</button></div>
+      </div>
+    </div>
+    <div class="col-lg-6">
+      <div class="card p-4">
+        <h4>Live Preview</h4>
+        <canvas id="previewCanvas" width="500" height="400"></canvas>
+        <p class="text-center text-muted small">Top-down view</p>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between mt-5">
+    <button onclick="showStep(2)" class="btn btn-outline-secondary btn-lg">Back</button>
+  </div>
+</div>
+
+<div id="step4" class="container mt-5 d-none">
+  <div class="progress"><div class="progress-bar" style="width: 100%;"></div></div>
+  <div class="d-flex justify-content-between mb-3"><small>1. Fixtures</small><small>2. Layout</small><small>3. Dimensions</small><strong>4. Quote</strong></div>
+  <div class="hero-small mb-4"><h2>Materials & Quote</h2><p>Pick colors—get your quote.</p></div>
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="card p-4">
+        <h4>Material Options</h4>
+        <div class="mb-4">
+          <label class="form-label fw-bold">Panel Material</label>
+          <select class="form-select form-select-lg" id="material"><option>Compact Laminate</option><option>Solid Phenolic</option><option>Stainless Steel</option></select>
+        </div>
+        <div class="mb-4">
+          <label class="form-label fw-bold">Color</label>
+          <div class="d-flex flex-wrap">
+            <div class="swatch" style="background:#f5f5f5;" title="White" onclick="selectSwatch(this)"></div>
+            <div class="swatch" style="background:#e0d4c2;" title="Almond" onclick="selectSwatch(this)"></div>
+            <div class="swatch" style="background:#a8a8a8;" title="Grey" onclick="selectSwatch(this)"></div>
+            <div class="swatch" style="background:#4a4a4a;" title="Graphite" onclick="selectSwatch(this)"></div>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label class="form-label fw-bold">Hardware</label>
+          <select class="form-select form-select-lg"><option>Stainless Steel</option><option>Chrome</option></select>
+        </div>
+        <div class="text-center"><button onclick="submitQuote()" class="btn btn-primary btn-lg">Submit & Get Quote</button></div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="summary-box">
+        <h4>Your Summary</h4>
+        <ul class="list-group list-group-flush" id="summary"></ul>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex justify-content-between mt-5">
+    <button onclick="showStep(3)" class="btn btn-outline-secondary btn-lg">Back</button>
+  </div>
+</div>
+
+<script>
+  function showStep(n) {
+    document.querySelectorAll(' ').forEach(el => el.classList.add('d-none'));
+    document.getElementById(`step${n}`).classList.remove('d-none');
+  }
+
+  // Layout selection
+  document.querySelectorAll('.btn-layout').forEach(btn => {
+    btn.onclick = () => {
+      document.querySelectorAll('.btn-layout .card').forEach(c => c.classList.remove('selected'));
+      btn.querySelector('.card').classList.add('selected');
+      document.getElementById('next2').disabled = false;
+      localStorage.setItem('layout', btn.dataset.layout);
+    };
+  });
+
+  function saveStep2() {
+    localStorage.setItem('roomName', document.getElementById('roomName').value.trim());
+  }
+
+  // Canvas preview
+  const canvas = document.getElementById('previewCanvas');
+  const ctx = canvas?.getContext('2d');
+  function drawPreview() {
+    if (!ctx) return;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const w = parseInt(document.getElementById('roomWidth').value) || 96;
+    const l = parseInt(document.getElementById('roomLength').value) || 120;
+    const scale = Math.min(canvas.width / l, canvas.height / w)
