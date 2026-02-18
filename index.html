@@ -1,36 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Custom Bathroom Partitions - Configurator</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"/>
-  <style>
-    body { background: #f8f9fa; font-family: 'Segoe UI', sans-serif; }
-    .progress { height: 10px; margin-bottom: 2rem; }
-    .progress-bar { background: #0d6efd; }
-    .card { border: none; box-shadow: 0 4px 20px rgba(0,0,0,0.1); border-radius: 12px; overflow: hidden; transition: transform 0.2s; }
-    .card:hover { transform: scale(1.02); }
-    .btn-layout, .swatch { cursor: pointer; }
-    .selected { border: 3px solid #0d6efd !important; box-shadow: 0 0 15px rgba(13,110,253,0.5); }
-    .hero { background: linear-gradient(135deg, #0d6efd, #0a58ca); color: white; padding: 5rem 1rem; text-align: center; }
-    .hero-small { background: #0d6efd; color: white; padding: 2rem 1rem; text-align: center; }
-    .form-label { font-weight: 500; color: #333; }
-    #previewCanvas { border: 2px solid #0d6efd; background: #e9f5ff; border-radius: 8px; width: 100%; height: 400px; }
-    .swatch { width: 60px; height: 60px; border: 2px solid #ddd; border-radius: 6px; margin: 4px; display: inline-block; }
-  </style>
-</head>
-<body>
-
-<!-- STEP 1: Hero / Start -->
-<div id="step1" class="hero">
-  <div class="container">
-    <h1>Design Your Perfect Restroom</h1>
-    <p class="lead mb-4">Fast quotes. ADA-compliant. Built for your space.</p>
-    <button class="btn btn-light btn-lg" onclick="showStep(2)">Get Started →</button>
-  </div>
-</div>
-
 <!-- STEP 2: Layout -->
 <div id="step2" class="container mt-5 d-none">
   <div class="progress"><div class="progress-bar" style="width:25%"></div></div>
@@ -39,186 +6,84 @@
   </div>
   <div class="hero-small mb-4">
     <h2>Select Your Restroom Layout</h2>
-    <p>Choose the configuration that best matches your space.</p>
+    <p>Choose how your partitions will fit.</p>
   </div>
   <div class="row g-4 justify-content-center">
     <div class="col-md-6 col-lg-4">
-      <button class="btn-layout w-100" data-layout="straight">
+      <button class="btn-layout w-100" data-layout="wall-to-wall">
         <div class="card">
-          <img src="https://placehold.co/400x180?text=Straight+Row" class="card-img-top" alt="Straight Row" loading="lazy">
+          <img src="https://placehold.co/400x180?text=Wall+to+Wall" class="card-img-top" alt="Wall-to-Wall" loading="lazy">
           <div class="card-body text-center">
-            <h5>Straight Row</h5>
-            <p class="text-muted">Simple linear setup</p>
+            <h5>Wall-to-Wall</h5>
+            <p class="text-muted">Fits flush against walls</p>
           </div>
         </div>
       </button>
     </div>
+
     <div class="col-md-6 col-lg-4">
-      <button class="btn-layout w-100" data-layout="l-shape">
+      <button class="btn-layout w-100" data-layout="open-ended-right">
         <div class="card">
-          <img src="https://placehold.co/400x180?text=L-Shape" class="card-img-top" alt="L-Shape" loading="lazy">
+          <img src="https://placehold.co/400x180?text=Open+Ended+Right" class="card-img-top" alt="Open-Ended Right" loading="lazy">
           <div class="card-body text-center">
-            <h5>L-Shape</h5>
-            <p class="text-muted">Turns a corner</p>
+            <h5>Open-Ended Right</h5>
+            <p class="text-muted">Exposed on right side</p>
           </div>
         </div>
       </button>
     </div>
+
     <div class="col-md-6 col-lg-4">
-      <button class="btn-layout w-100" data-layout="u-shape">
+      <button class="btn-layout w-100" data-layout="open-ended-left">
         <div class="card">
-          <img src="https://placehold.co/400x180?text=U-Shape" class="card-img-top" alt="U-Shape" loading="lazy">
+          <img src="https://placehold.co/400x180?text=Open+Ended+Left" class="card-img-top" alt="Open-Ended Left" loading="lazy">
           <div class="card-body text-center">
-            <h5>U-Shape</h5>
-            <p class="text-muted">Wraps three sides</p>
+            <h5>Open-Ended Left</h5>
+            <p class="text-muted">Exposed on left side</p>
           </div>
         </div>
       </button>
     </div>
-    <!-- Add more layouts here if you want -->
+
+    <div class="col-md-6 col-lg-4">
+      <button class="btn-layout w-100" data-layout="alcove-right">
+        <div class="card">
+          <img src="https://placehold.co/400x180?text=Alcove+Right" class="card-img-top" alt="Alcove Right" loading="lazy">
+          <div class="card-body text-center">
+            <h5>Alcove Right</h5>
+            <p class="text-muted">Enclosed from right</p>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <button class="btn-layout w-100" data-layout="alcove-left">
+        <div class="card">
+          <img src="https://placehold.co/400x180?text=Alcove+Left" class="card-img-top" alt="Alcove Left" loading="lazy">
+          <div class="card-body text-center">
+            <h5>Alcove Left</h5>
+            <p class="text-muted">Enclosed from left</p>
+          </div>
+        </div>
+      </button>
+    </div>
+
+    <div class="col-md-6 col-lg-4">
+      <button class="btn-layout w-100" data-layout="freestanding">
+        <div class="card">
+          <img src="https://placehold.co/400x180?text=Freestanding" class="card-img-top" alt="Freestanding" loading="lazy">
+          <div class="card-body text-center">
+            <h5>Freestanding</h5>
+            <p class="text-muted">No wall connection</p>
+          </div>
+        </div>
+      </button>
+    </div>
   </div>
+
   <div class="d-flex justify-content-between mt-5">
     <button class="btn btn-outline-secondary btn-lg" onclick="showStep(1)">Back</button>
     <button id="next2" class="btn btn-primary btn-lg" disabled onclick="showStep(3)">Next: Dimensions →</button>
   </div>
 </div>
-
-<!-- STEP 3: Dimensions + Preview -->
-<div id="step3" class="container mt-5 d-none">
-  <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
-  <div class="d-flex justify-content-between mb-3 small">
-    <div>1. Fixtures</div><div>2. Layout</div><strong>3. Dimensions</strong><div>4. Quote</div>
-  </div>
-  <div class="hero-small mb-4">
-    <h2>Customize Your Dimensions</h2>
-    <p>Enter measurements. Preview updates live.</p>
-  </div>
-  <div class="row">
-    <div class="col-lg-6">
-      <div class="card p-4">
-        <h4>Room Settings</h4>
-        <div class="row g-3">
-          <div class="col-6">
-            <label class="form-label">Room Length (inches)</label>
-            <input type="number" id="roomLength" class="form-control" value="120" min="60" oninput="drawPreview()">
-          </div>
-          <div class="col-6">
-            <label class="form-label">Room Width (inches)</label>
-            <input type="number" id="roomWidth" class="form-control" value="96" min="60" oninput="drawPreview()">
-          </div>
-        </div>
-        <div class="form-check mt-3">
-          <input type="checkbox" class="form-check-input" id="adaCheck" checked onchange="drawPreview()">
-          <label class="form-check-label">ADA Compliance Needed</label>
-        </div>
-        <hr>
-        <h5>Sample Stall</h5>
-        <div class="row g-3">
-          <div class="col-6">
-            <label class="form-label">Stall Width (in)</label>
-            <input type="number" class="form-control" value="36" min="30" oninput="drawPreview()">
-          </div>
-          <div class="col-6">
-            <label class="form-label">Stall Depth (in)</label>
-            <input type="number" class="form-control" value="60" min="48" oninput="drawPreview()">
-          </div>
-        </div>
-        <button class="btn btn-primary btn-lg w-100 mt-4" onclick="showStep(4)">Next: Get Quote →</button>
-      </div>
-    </div>
-    <div class="col-lg-6">
-      <div class="card p-4 text-center">
-        <h4>Live Preview</h4>
-        <canvas id="previewCanvas"></canvas>
-        <p class="text-muted small mt-2">Top-down view (approximate scale)</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- STEP 4: Materials & Quote (simplified) -->
-<div id="step4" class="container mt-5 d-none">
-  <div class="progress"><div class="progress-bar" style="width:100%"></div></div>
-  <div class="d-flex justify-content-between mb-3 small">
-    <div>1. Fixtures</div><div>2. Layout</div><div>3. Dimensions</div><strong>4. Quote</strong>
-  </div>
-  <div class="hero-small mb-4">
-    <h2>Choose Materials & Get Quote</h2>
-    <p>Finalize and submit for your custom quote.</p>
-  </div>
-  <div class="card p-4">
-    <h4>Your Configuration Summary</h4>
-    <p id="summaryText" class="mb-3">Room: 120" × 96" • ADA: Yes • Sample Stall: 36" × 60"</p>
-    <button class="btn btn-primary btn-lg w-100" onclick="alert('Thanks! Your quote request has been submitted (demo mode). We\'ll follow up soon.')">Submit Quote</button>
-  </div>
-</div>
-
-<script>
-  function showStep(n) {
-    document.querySelectorAll('[id^="step"]').forEach(el => el.classList.add('d-none'));
-    const target = document.getElementById('step' + n);
-    if (target) target.classList.remove('d-none');
-  }
-
-  const canvas = document.getElementById('previewCanvas');
-  const ctx = canvas ? canvas.getContext('2d') : null;
-
-  function drawPreview() {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const roomLength = parseInt(document.getElementById('roomLength')?.value) || 120;
-    const roomWidth = parseInt(document.getElementById('roomWidth')?.value) || 96;
-    const stallWidth = parseInt(document.querySelector('input[value="36"]')?.value) || 36;
-    const stallDepth = parseInt(document.querySelector('input[value="60"]')?.value) || 60;
-
-    const scale = Math.min(canvas.width / (roomLength + 40), canvas.height / (roomWidth + 40)) * 0.9;
-
-    // Room outline
-    ctx.strokeStyle = '#333';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(20, 20, roomLength * scale, roomWidth * scale);
-
-    // Sample stall along bottom wall
-    ctx.fillStyle = '#add8e6';
-    ctx.fillRect(40, 20 + (roomWidth * scale - stallDepth * scale), stallWidth * scale, stallDepth * scale);
-
-    // Toilet symbol (simple circle)
-    ctx.fillStyle = '#ffffff';
-    ctx.beginPath();
-    ctx.arc(40 + (stallWidth / 2) * scale, 20 + (roomWidth * scale - stallDepth / 2 * scale), 12, 0, Math.PI * 2);
-    ctx.fill();
-
-    // ADA circle if checked
-    if (document.getElementById('adaCheck')?.checked) {
-      ctx.strokeStyle = '#28a745';
-      ctx.setLineDash([5, 5]);
-      ctx.beginPath();
-      ctx.arc(40 + (stallWidth / 2) * scale, 20 + (roomWidth * scale - stallDepth / 2 * scale), 50, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.setLineDash([]);
-    }
-
-    // Label
-    ctx.fillStyle = '#000';
-    ctx.font = '14px Arial';
-    ctx.fillText(`Room: ${roomLength}" x ${roomWidth}"`, 30, 15);
-  }
-
-  // Events
-  window.addEventListener('load', () => {
-    showStep(1);
-    drawPreview();
-  });
-
-  // Enable "Next" after selecting a layout
-  document.querySelectorAll('.btn-layout').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.btn-layout .card').forEach(c => c.classList.remove('selected'));
-      btn.querySelector('.card').classList.add('selected');
-      document.getElementById('next2').disabled = false;
-    });
-  });
-</script>
-</body>
-</html>
