@@ -22,7 +22,6 @@
 </head>
 <body>
 
-<!-- STEP 1: Hero -->
 <div id="step1" class="hero">
   <div class="container">
     <h1>Design Your Perfect Restroom</h1>
@@ -31,7 +30,6 @@
   </div>
 </div>
 
-<!-- STEP 2: Layout -->
 <div id="step2" class="container mt-5 d-none">
   <div class="progress"><div class="progress-bar" style="width:25%"></div></div>
   <div class="d-flex justify-content-between mb-4 small text-muted">
@@ -40,13 +38,11 @@
     <span>3. Dimensions</span>
     <span>4. Quote</span>
   </div>
-
   <div class="hero-small mb-4">
     <h2 class="display-6">Pick Your Layout</h2>
     <p class="text-white-50">Tap one. We’ll build around it.</p>
   </div>
-
-  <div class="row g-3 justify-content-center mx-auto" style="max-width: 1200px;">
+  <div class="row g-3 justify-content-center mx-auto" style="max-width:1200px;">
     <div class="col-6 col-md-5 col-lg-4">
       <button class="btn-layout w-100 h-100" data-layout="wall-to-wall">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -58,7 +54,6 @@
         </div>
       </button>
     </div>
-
     <div class="col-6 col-md-5 col-lg-4">
       <button class="btn-layout w-100 h-100" data-layout="open-ended-right">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -70,7 +65,6 @@
         </div>
       </button>
     </div>
-
     <div class="col-6 col-md-5 col-lg-4">
       <button class="btn-layout w-100 h-100" data-layout="open-ended-left">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -82,7 +76,6 @@
         </div>
       </button>
     </div>
-
     <div class="col-6 col-md-5 col-lg-4">
       <button class="btn-layout w-100 h-100" data-layout="alcove-right">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -94,7 +87,6 @@
         </div>
       </button>
     </div>
-
     <div class="col-6 col-md-5 col-lg-4">
       <button class="btn-layout w-100 h-100" data-layout="alcove-left">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -106,7 +98,6 @@
         </div>
       </button>
     </div>
-
     <div class="col-6 col-md-5 col-lg-4">
       <button class="btn-layout w-100 h-100" data-layout="freestanding">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -119,14 +110,12 @@
       </button>
     </div>
   </div>
-
   <div class="d-flex justify-content-between mt-5">
     <button class="btn btn-outline-secondary btn-lg" onclick="showStep(1)">Back</button>
     <button id="next2" class="btn btn-primary btn-lg" disabled onclick="showStep(3)">Next: Dimensions →</button>
   </div>
 </div>
 
-<!-- STEP 3: Dimensions -->
 <div id="step3" class="container mt-5 d-none">
   <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
   <div class="d-flex justify-content-between mb-4 small text-muted">
@@ -169,7 +158,7 @@
             <input type="number" class="form-control stall-depth" value="60" min="48" oninput="drawPreview()">
           </div>
         </div>
-        <button class="btn btn-primary btn-lg w-100 mt-4" onclick="showStep(4)">Next: Get Quote →</button>
+        <button class="btn btn-primary btn-lg w-100 mt-4" onclick="showStep(4)">Next: Get Quote →</form>
       </div>
     </div>
     <div class="col-lg-6">
@@ -182,7 +171,6 @@
   </div>
 </div>
 
-<!-- STEP 4: Quote -->
 <div id="step4" class="container mt-5 d-none">
   <div class="progress"><div class="progress-bar" style="width:100%"></div></div>
   <div class="d-flex justify-content-between mb-4 small text-muted">
