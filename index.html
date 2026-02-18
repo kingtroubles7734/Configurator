@@ -162,11 +162,11 @@
         <div class="row g-3">
           <div class="col-6">
             <label class="form-label">Stall Width (in)</label>
-            <input type="number" class="form-control" value="36" min="30" oninput="drawPreview()">
+            <input type="number" class="form-control stall-width" value="36" min="30" oninput="drawPreview()">
           </div>
           <div class="col-6">
             <label class="form-label">Stall Depth (in)</label>
-            <input type="number" class="form-control" value="60" min="48" oninput="drawPreview()">
+            <input type="number" class="form-control stall-depth" value="60" min="48" oninput="drawPreview()">
           </div>
         </div>
         <button class="btn btn-primary btn-lg w-100 mt-4" onclick="showStep(4)">Next: Get Quote →</button>
@@ -218,8 +218,8 @@
 
     const roomLength = parseInt(document.getElementById('roomLength')?.value) || 120;
     const roomWidth = parseInt(document.getElementById('roomWidth')?.value) || 96;
-    const stallWidth = parseInt(document.querySelector('input ')?.value) || 36;
-    const stallDepth = parseInt(document.querySelector('input ')?.value) || 60;
+    const stallWidth = parseInt(document.querySelector('.stall-width')?.value) || 36;
+    const stallDepth = parseInt(document.querySelector('.stall-depth')?.value) || 60;
 
     const scale = Math.min(canvas.width / (roomLength + 40), canvas.height / (roomWidth + 40)) * 0.9;
 
