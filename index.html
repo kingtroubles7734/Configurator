@@ -15,8 +15,8 @@
     .selected { border: 3px solid #0d6efd !important; box-shadow: 0 8px 25px rgba(13,110,253,0.3) !important; }
     .hero-small { background: #0d6efd; color: white; padding: 2rem 1rem; text-align: center; border-radius: 12px; }
     .form-label { font-weight: 500; color: #333; }
-    #previewCanvas { border: 2px solid #0d6efd; background: #e9f5ff; border-radius: 8px; width: 100%; height: 400px; }
-    .toggle-group { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
+    #previewCanvas { border: 2px solid #0d6efd; background: #ffffff; border-radius: 8px; width: 100%; height: 500px; }
+    .toggle-group { display: flex; justify-content: center; margin-bottom: 1.5rem; }
   </style>
 </head>
 <body>
@@ -112,7 +112,7 @@
   </div>
 
   <div id="layoutGrid" class="row g-3 justify-content-center mx-auto" style="max-width: 1200px;">
-    <!-- Full list from your pictures – ADA -->
+    <!-- Full layout options restored + expanded from your pictures -->
     <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
       <button class="btn-layout w-100 h-100" data-layout="alcove-closed-ada-left">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -254,7 +254,7 @@
       </button>
     </div>
 
-    <!-- Non-ADA -->
+    <!-- Non-ADA layouts -->
     <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
       <button class="btn-layout w-100 h-100" data-layout="alcove-closed-left">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -399,19 +399,20 @@
 
   <div class="card p-4 mb-4">
     <div class="row mb-3 align-items-center">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <label class="form-label fw-bold">Room Name</label>
         <input type="text" class="form-control" id="roomNameDimensions" value="Untitled" placeholder="Untitled">
       </div>
-      <div class="col-md-6 text-end">
-        <div class="btn-group">
-          <button class="btn btn-outline-primary active">2D</button>
-          <button class="btn btn-outline-primary">3D</button>
-        </div>
+    </div>
+
+    <div class="toggle-group">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="perStallToggle" checked onchange="togglePerStall()">
+        <label class="form-check-label fw-bold" for="perStallToggle">Customize each stall individually</label>
       </div>
     </div>
 
-    <div class="row mb-4">
+    <div class="row mb-4" id="stallSelectorRow">
       <div class="col-md-6">
         <label class="form-label fw-bold">Select Stall to Customize</label>
         <select class="form-select form-select-lg" id="stallSelector" onchange="updateSelectedStall()">
@@ -490,13 +491,10 @@
     stallData.length = 0;
     for (let i = 0; i < numToilets; i++) {
       stallData.push({
-        name: `Stall ${i+1}`,
         depth: 62,
         width: 36,
         doorOpening: 24,
-        doorSwing: 'Right In',
-        doorPosition: 'Center',
-        toiletPosition: 'Center'
+        doorSwing: 'Right In'
       });
     }
   }
@@ -521,10 +519,6 @@
       <h5>Customize Stall ${selectedStall}</h5>
       <div class="row g-3">
         <div class="col-md-6">
-          <label class="form-label">Stall Name</label>
-          <input type="text" class="form-control" value="${stall.name}" oninput="updateStallData('name', this.value)">
-        </div>
-        <div class="col-md-6">
           <label class="form-label">Partition Depth (inches)</label>
           <input type="number" class="form-control" value="${stall.depth}" min="48" oninput="updateStallData('depth', this.value)">
         </div>
@@ -545,29 +539,13 @@
             <option ${stall.doorSwing === 'Left Out' ? 'selected' : ''}>Left Out</option>
           </select>
         </div>
-        <div class="col-md-6">
-          <label class="form-label">Door Position</label>
-          <select class="form-select" onchange="updateStallData('doorPosition', this.value)">
-            <option ${stall.doorPosition === 'Center' ? 'selected' : ''}>Center</option>
-            <option ${stall.doorPosition === 'Left' ? 'selected' : ''}>Left</option>
-            <option ${stall.doorPosition === 'Right' ? 'selected' : ''}>Right</option>
-          </select>
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Toilet Position</label>
-          <select class="form-select" onchange="updateStallData('toiletPosition', this.value)">
-            <option ${stall.toiletPosition === 'Center' ? 'selected' : ''}>Center</option>
-            <option ${stall.toiletPosition === 'Left' ? 'selected' : ''}>Left</option>
-            <option ${stall.toiletPosition === 'Right' ? 'selected' : ''}>Right</option>
-          </select>
-        </div>
       </div>
     `;
     drawPreview();
   }
 
   function updateStallData(key, value) {
-    stallData[selectedStall - 1][key] = value;
+    stallData[selectedStall - 1][key] = parseInt(value) || value;
     drawPreview();
   }
 
@@ -578,10 +556,11 @@
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const roomLength = 120;
+    const roomLength = 120; // can pull from input if added
     const roomWidth = 96;
     const scale = Math.min(canvas.width / (roomLength + 40), canvas.height / (roomWidth + 40)) * 0.8;
 
+    // Room outline
     ctx.strokeStyle = '#00008b';
     ctx.lineWidth = 4;
     ctx.strokeRect(20, 20, roomLength * scale, roomWidth * scale);
@@ -593,22 +572,26 @@
       const doorOpening = parseInt(stall.doorOpening) || 24;
       const isSelected = (index + 1 === selectedStall);
 
+      // Stall box
       ctx.fillStyle = isSelected ? '#ffdddd' : '#add8e6';
       ctx.fillRect(xOffset, 20 + (roomWidth * scale - depth * scale), width * scale, depth * scale);
       ctx.strokeRect(xOffset, 20 + (roomWidth * scale - depth * scale), width * scale, depth * scale);
 
+      // Toilet
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
       ctx.arc(xOffset + (width / 2) * scale, 20 + (roomWidth * scale - depth / 2 * scale), 12, 0, Math.PI * 2);
       ctx.fill();
 
+      // Stall number
       ctx.fillStyle = '#000';
       ctx.font = '12px Arial';
       ctx.fillText(`${index + 1}`, xOffset + (width / 2 * scale) - 5, 20 + (roomWidth * scale - depth / 2 * scale) + 5);
 
-      // Red dimension arrows (depth vertical)
+      // Red arrows
       ctx.strokeStyle = 'red';
       ctx.lineWidth = 2;
+      // Depth
       ctx.beginPath();
       ctx.moveTo(xOffset + width * scale + 10, 20 + (roomWidth * scale - depth * scale));
       ctx.lineTo(xOffset + width * scale + 10, 20 + roomWidth * scale);
@@ -617,7 +600,7 @@
       ctx.stroke();
       ctx.fillText(`${depth}"`, xOffset + width * scale + 15, 20 + (roomWidth * scale - depth * scale / 2));
 
-      // Width horizontal
+      // Width
       ctx.beginPath();
       ctx.moveTo(xOffset, 20 + roomWidth * scale + 10);
       ctx.lineTo(xOffset + width * scale, 20 + roomWidth * scale + 10);
@@ -626,7 +609,7 @@
       ctx.stroke();
       ctx.fillText(`${width}"`, xOffset + width * scale / 2, 20 + roomWidth * scale + 25);
 
-      // Door opening (simplified)
+      // Door opening
       ctx.beginPath();
       ctx.moveTo(xOffset + width * scale - doorOpening * scale, 20 + roomWidth * scale - depth * scale + 10);
       ctx.lineTo(xOffset + width * scale, 20 + roomWidth * scale - depth * scale + 10);
