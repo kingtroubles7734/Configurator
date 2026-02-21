@@ -17,7 +17,7 @@
     .form-label { font-weight: 500; color: #333; }
     #previewCanvas { border: 2px solid #0d6efd; background: #e9f5ff; border-radius: 8px; width: 100%; height: 400px; }
     .toggle-group { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
-    .toilet-icon { width: 80px; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    .toilet-icon { width: 80px; height: auto; }
     .counter-btn { width: 60px; height: 60px; font-size: 1.8rem; line-height: 1; border-radius: 50%; }
   </style>
 </head>
@@ -48,8 +48,9 @@
             <button class="btn btn-outline-primary counter-btn" onclick="changeToiletCount(1)">+</button>
           </div>
 
+          <!-- Toilet icons container -->
           <div class="d-flex flex-wrap justify-content-center gap-4 mb-4" id="toiletIcons" style="min-height: 120px;">
-            <!-- JS inserts toilet images here -->
+            <!-- Filled by JS -->
           </div>
         </div>
 
@@ -99,16 +100,45 @@
   </div>
 </div>
 
-<!-- Step 2 - paste your full layout grid here if customized -->
+<!-- Step 2 (paste your full layout grid here if customized) -->
 <div id="step2" class="container mt-5 d-none">
-  <!-- Your Step 2 content -->
-  <button onclick="showStep(1)">Back</button>
-  <button id="next2" disabled onclick="showStep(3)">Next</button>
+  <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
+  <div class="d-flex justify-content-between mb-4 small text-muted">
+    <span>1. Fixtures</span>
+    <strong>2. Layout</strong>
+    <span>3. Dimensions</span>
+    <span>4. Quote</span>
+  </div>
+
+  <div class="hero-small mb-4">
+    <h2>Select Layout</h2>
+    <p class="text-white-50">Choose the configuration that best fits your space.</p>
+  </div>
+
+  <div class="toggle-group">
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="toggleADA" checked onchange="filterLayouts()">
+      <label class="form-check-label" for="toggleADA">ADA Layouts</label>
+    </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="toggleNonADA" checked onchange="filterLayouts()">
+      <label class="form-check-label" for="toggleNonADA">Non-ADA Layouts</label>
+    </div>
+  </div>
+
+  <div id="layoutGrid" class="row g-3 justify-content-center mx-auto" style="max-width: 1200px;">
+    <!-- Add your full layout cards here -->
+  </div>
+
+  <div class="d-flex justify-content-between mt-5">
+    <button class="btn btn-outline-secondary btn-lg" onclick="showStep(1)">Back</button>
+    <button id="next2" class="btn btn-primary btn-lg" disabled onclick="showStep(3)">Next: Dimensions →</button>
+  </div>
 </div>
 
-<!-- Step 3 and 4 placeholders -->
-<div id="step3" class="container mt-5 d-none">Step 3</div>
-<div id="step4" class="container mt-5 d-none">Step 4</div>
+<!-- Step 3 and Step 4 placeholders - add your previous content if needed -->
+<div id="step3" class="container mt-5 d-none">Step 3: Dimensions</div>
+<div id="step4" class="container mt-5 d-none">Step 4: Quote</div>
 
 <script>
   function changeToiletCount(delta) {
@@ -120,14 +150,16 @@
 
   function updateToiletIcons() {
     const container = document.getElementById('toiletIcons');
-    if (!container) return; // safety
+    if (!container) return;
 
     container.innerHTML = '';
     const count = parseInt(document.getElementById('toiletDisplay').textContent) || 2;
 
+    const toiletIconUrl = 'https://staging.svgrepo.com/svg/85080/toilet.svg';
+
     for (let i = 1; i <= count; i++) {
       const img = document.createElement('img');
-      img.src = `https://placehold.co/80x120/cccccc/000000/png?text=Toilet+${i}&font=roboto`;
+      img.src = toiletIconUrl;
       img.alt = `Toilet ${i}`;
       img.className = 'toilet-icon';
       container.appendChild(img);
@@ -139,6 +171,8 @@
     const target = document.getElementById('step' + n);
     if (target) target.classList.remove('d-none');
   }
+
+  // Add your other functions here (filterLayouts, drawPreview, etc.)
 
   window.addEventListener('load', () => {
     updateToiletIcons();
