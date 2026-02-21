@@ -32,29 +32,29 @@
 
   <div class="hero-small mb-4">
     <h2>Number of toilets in this room</h2>
-    <p>Start by telling us how many stalls you need in this room.</p>
+    <p>Start by telling us how many stalls you need here.</p>
   </div>
 
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="card p-4">
-        <div class="mb-4">
-          <label class="form-label fw-bold">Name your room (optional)</label>
-          <input type="text" class="form-control form-control-lg" id="roomName" placeholder="e.g., Main Restroom">
+        <div class="mb-4 text-center">
+          <label class="form-label fw-bold d-block mb-3">How many stalls?</label>
+          <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
+            <button class="btn btn-outline-secondary btn-lg" onclick="changeToiletCount(-1)">-</button>
+            <div class="display-4 fw-bold" id="toiletDisplay">2</div>
+            <button class="btn btn-outline-secondary btn-lg" onclick="changeToiletCount(1)">+</button>
+          </div>
+
+          <!-- Dynamic toilet icons -->
+          <div class="d-flex flex-wrap justify-content-center gap-3 mb-4" id="toiletIcons">
+            <!-- Filled by JS -->
+          </div>
         </div>
 
         <div class="mb-4">
-          <label class="form-label fw-bold">Number of Toilets</label>
-          <select class="form-select form-select-lg" id="toilets" onchange="updateToiletCount()">
-            <option value="1">1</option>
-            <option value="2" selected>2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
+          <label class="form-label fw-bold">Name your room (optional)</label>
+          <input type="text" class="form-control form-control-lg" id="roomName" placeholder="e.g., Main Restroom">
         </div>
 
         <div class="mb-4">
@@ -81,6 +81,18 @@
         <div class="text-center">
           <button class="btn btn-primary btn-lg" onclick="showStep(2)">Next: Select Layout →</button>
         </div>
+      </div>
+    </div>
+
+    <!-- Sidebar - Get a Quote & contact -->
+    <div class="col-lg-4 d-none d-lg-block">
+      <div class="card p-4 bg-light border-0 shadow-sm">
+        <h4 class="text-primary">Get a Quote</h4>
+        <p class="text-muted">Skip the wait! Get instant pricing with our innovative bathroom partitions tool now!</p>
+        <hr>
+        <h5>Do you have questions?</h5>
+        <p class="mb-1"><strong>Call:</strong> <a href="tel:8665311952">866-531-1952</a></p>
+        <p><strong>Email:</strong> <a href="mailto:sales@onepointpartitions.com">sales@onepointpartitions.com</a></p>
       </div>
     </div>
   </div>
