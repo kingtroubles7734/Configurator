@@ -88,7 +88,6 @@
 </div>
 
 <div id="step2" class="container mt-5 d-none">
-  <!-- ... Your existing layout step here (kept as-is for brevity; paste your full step2 block if needed) ... -->
   <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
   <div class="d-flex justify-content-between mb-4 small text-muted">
     <span>1. Fixtures</span>
@@ -102,7 +101,6 @@
     <p class="text-white-50">Pick the style that fits your space best.</p>
   </div>
 
-  <!-- Toggle for ADA / Non-ADA (from previous) -->
   <div class="toggle-group">
     <div class="form-check form-switch">
       <input class="form-check-input" type="checkbox" id="toggleADA" checked onchange="filterLayouts()">
@@ -115,8 +113,18 @@
   </div>
 
   <div id="layoutGrid" class="row g-3 justify-content-center mx-auto" style="max-width: 1200px;">
-    <!-- Paste your full layout cards here (ADA and non-ADA as before) -->
-    <!-- For brevity, assuming you have them from previous code -->
+    <!-- ADA Layouts -->
+    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
+      <button class="btn-layout w-100 h-100" data-layout="alcove-closed-ada-left">
+        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
+          <img src="https://placehold.co/400x240?text=Alcove+Closed%2C+ADA%2C+Left" class="card-img-top" alt="Alcove Closed, ADA, Left" loading="lazy">
+          <div class="card-body p-3 text-center">
+            <h6 class="fw-medium mb-1">Alcove Closed, ADA, Left</h6>
+          </div>
+        </div>
+      </button>
+    </div>
+    <!-- ... (all other ADA and non-ADA cards from previous version - add them here if not already) ... -->
   </div>
 
   <div class="d-flex justify-content-between mt-5">
@@ -182,7 +190,6 @@
 </div>
 
 <div id="step4" class="container mt-5 d-none">
-  <!-- Your quote step unchanged for now -->
   <div class="progress"><div class="progress-bar" style="width:100%"></div></div>
   <div class="d-flex justify-content-between mb-4 small text-muted">
     <span>1. Fixtures</span>
@@ -209,13 +216,13 @@
 </div>
 
 <script>
-  let numToilets = 2; // default from select
+  let numToilets = 2; // default
 
   function showStep(n) {
     document.querySelectorAll('[id^="step"]').forEach(el => el.classList.add('d-none'));
     const target = document.getElementById('step' + n);
     if (target) target.classList.remove('d-none');
-    if (n === 3) generateStallForms(); // regenerate on enter
+    if (n === 3) generateStallForms();
   }
 
   function updateToiletCount() {
@@ -229,9 +236,8 @@
     const perStall = document.getElementById('perStallToggle').checked;
 
     if (!perStall) {
-      // Single shared fields for all stalls
-      const shared = document.createElement('div');
-      shared.innerHTML = `
+      // Shared for all
+      container.innerHTML = `
         <h5>Shared Stall Dimensions (applies to all ${numToilets})</h5>
         <div class="row g-3">
           <div class="col-6">
@@ -255,9 +261,8 @@
           </div>
         </div>
       `;
-      container.appendChild(shared);
     } else {
-      // Per-stall fields
+      // Per stall
       for (let i = 1; i <= numToilets; i++) {
         const stallDiv = document.createElement('div');
         stallDiv.className = 'stall-group';
@@ -306,41 +311,37 @@
     const roomWidth = parseInt(document.getElementById('roomWidth')?.value) || 96;
     const scale = Math.min(canvas.width / (roomLength + 40), canvas.height / (roomWidth + 40)) * 0.9;
 
-    // Room outline
     ctx.strokeStyle = '#333';
     ctx.lineWidth = 4;
     ctx.strokeRect(20, 20, roomLength * scale, roomWidth * scale);
 
     const perStall = document.getElementById('perStallToggle')?.checked;
-    const stalls = perStall ? document.querySelectorAll('.stall-group') : [document];
+    const stallElements = perStall ? document.querySelectorAll('.stall-group') : [document];
 
     let xOffset = 40;
-    stalls.forEach((group, index) => {
-      const widthInput = group.querySelector('.stall-width');
-      const depthInput = group.querySelector('.stall-depth');
-      const stallWidth = parseInt(widthInput?.value) || 36;
-      const stallDepth = parseInt(depthInput?.value) || 60;
+    stallElements.forEach((el, index) => {
+      const widthEl = el.querySelector('.stall-width');
+      const depthEl = el.querySelector('.stall-depth');
+      const stallWidth = parseInt(widthEl?.value) || 36;
+      const stallDepth = parseInt(depthEl?.value) || 60;
 
-      // Stall rectangle
       ctx.fillStyle = '#add8e6';
       ctx.fillRect(xOffset, 20 + (roomWidth * scale - stallDepth * scale), stallWidth * scale, stallDepth * scale);
       ctx.strokeRect(xOffset, 20 + (roomWidth * scale - stallDepth * scale), stallWidth * scale, stallDepth * scale);
 
-      // Toilet circle
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
       ctx.arc(xOffset + (stallWidth / 2) * scale, 20 + (roomWidth * scale - stallDepth / 2 * scale), 12, 0, Math.PI * 2);
       ctx.fill();
 
-      // Label stall number
       ctx.fillStyle = '#000';
       ctx.font = '12px Arial';
-      ctx.fillText(`Stall ${index + 1}`, xOffset + 10, 40 + (roomWidth * scale - stallDepth * scale));
+      ctx.fillText(`Stall ${index + 1}`, xOffset + 10, 35 + (roomWidth * scale - stallDepth * scale));
 
-      xOffset += (stallWidth + 10) * scale; // space between stalls
+      xOffset += stallWidth * scale + 10 * scale; // spacing
     });
 
-    // ADA circle on first stall if checked
+    // ADA arc on first stall
     if (document.getElementById('adaCheck')?.checked) {
       ctx.strokeStyle = '#28a745';
       ctx.setLineDash([5, 5]);
