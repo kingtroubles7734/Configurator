@@ -17,7 +17,7 @@
     .form-label { font-weight: 500; color: #333; }
     #previewCanvas { border: 2px solid #0d6efd; background: #e9f5ff; border-radius: 8px; width: 100%; height: 400px; }
     .toggle-group { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
-    .toilet-icon { width: 80px; height: auto; }
+    .toilet-icon { width: 80px; height: auto; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); }
     .counter-btn { width: 60px; height: 60px; font-size: 1.8rem; line-height: 1; border-radius: 50%; }
   </style>
 </head>
@@ -48,9 +48,8 @@
             <button class="btn btn-outline-primary counter-btn" onclick="changeToiletCount(1)">+</button>
           </div>
 
-          <!-- Toilet icons container -->
           <div class="d-flex flex-wrap justify-content-center gap-4 mb-4" id="toiletIcons" style="min-height: 120px;">
-            <!-- Filled by JS -->
+            <!-- JS inserts real toilet SVGs here -->
           </div>
         </div>
 
@@ -93,15 +92,16 @@
         <p class="text-muted">Skip the wait! Get instant pricing with our innovative bathroom partitions tool now!</p>
         <hr class="my-4">
         <h5 class="mb-3">Do you have questions?</h5>
-        <p class="mb-2"><strong>Call:</strong> <a href="tel:8566847575" class="text-primary">856-684-7575</a></p>
-        <p><strong>Email:</strong> <a href="mailto:sales@associatedbuilding.com" class="text-primary">sales@associatedbuilding.com</a></p>
+        <p class="mb-2"><strong>Call:</strong> <a href="tel:8665311952" class="text-primary">866-531-1952</a></p>
+        <p><strong>Email:</strong> <a href="mailto:sales@onepointpartitions.com" class="text-primary">sales@onepointpartitions.com</a></p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Step 2 (paste your full layout grid here if customized) -->
+<!-- Step 2 (add your full layout grid here) -->
 <div id="step2" class="container mt-5 d-none">
+  <!-- Your Step 2 content with layout cards -->
   <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
   <div class="d-flex justify-content-between mb-4 small text-muted">
     <span>1. Fixtures</span>
@@ -127,7 +127,7 @@
   </div>
 
   <div id="layoutGrid" class="row g-3 justify-content-center mx-auto" style="max-width: 1200px;">
-    <!-- Add your full layout cards here -->
+    <!-- Your full layout cards here -->
   </div>
 
   <div class="d-flex justify-content-between mt-5">
@@ -136,9 +136,9 @@
   </div>
 </div>
 
-<!-- Step 3 and Step 4 placeholders - add your previous content if needed -->
-<div id="step3" class="container mt-5 d-none">Step 3: Dimensions</div>
-<div id="step4" class="container mt-5 d-none">Step 4: Quote</div>
+<!-- Step 3 and Step 4 - add your previous versions -->
+<div id="step3" class="container mt-5 d-none">Step 3: Enter Dimensions</div>
+<div id="step4" class="container mt-5 d-none">Step 4: Get Quote</div>
 
 <script>
   function changeToiletCount(delta) {
@@ -155,7 +155,8 @@
     container.innerHTML = '';
     const count = parseInt(document.getElementById('toiletDisplay').textContent) || 2;
 
-    const toiletIconUrl = 'https://staging.svgrepo.com/svg/85080/toilet.svg';
+    // Working public SVG toilet icon (your requested one, production version)
+    const toiletIconUrl = 'https://www.svgrepo.com/show/85080/toilet.svg';
 
     for (let i = 1; i <= count; i++) {
       const img = document.createElement('img');
