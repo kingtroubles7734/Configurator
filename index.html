@@ -192,7 +192,7 @@
 
 <script>
   function showStep(n) {
-    document.querySelectorAll(' ').forEach(el => el.classList.add('d-none'));
+    document.querySelectorAll('[id^="step"]').forEach(el => el.classList.add('d-none'));
     const target = document.getElementById('step' + n);
     if (target) target.classList.remove('d-none');
   }
