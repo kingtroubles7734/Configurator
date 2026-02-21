@@ -38,23 +38,23 @@
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="card p-4">
-        <div class="mb-4">
-          <label class="form-label fw-bold">Name your room (optional)</label>
-          <input type="text" class="form-control form-control-lg" id="roomName" placeholder="e.g., Main Restroom">
+        <div class="mb-4 text-center">
+          <label class="form-label fw-bold d-block mb-3">How many stalls?</label>
+          <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
+            <button class="btn btn-outline-secondary btn-lg" onclick="changeToiletCount(-1)">-</button>
+            <div class="display-4 fw-bold" id="toiletDisplay">2</div>
+            <button class="btn btn-outline-secondary btn-lg" onclick="changeToiletCount(1)">+</button>
+          </div>
+
+          <!-- Dynamic toilet icons here -->
+          <div class="d-flex flex-wrap justify-content-center gap-3 mb-4" id="toiletIcons">
+            <!-- JS fills this -->
+          </div>
         </div>
 
         <div class="mb-4">
-          <label class="form-label fw-bold">Number of Toilets</label>
-          <select class="form-select form-select-lg" id="toilets" onchange="updateToiletCount()">
-            <option value="1">1</option>
-            <option value="2" selected>2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
+          <label class="form-label fw-bold">Name your room (optional)</label>
+          <input type="text" class="form-control form-control-lg" id="roomName" placeholder="e.g., Main Restroom">
         </div>
 
         <div class="mb-4">
@@ -83,564 +83,59 @@
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<div id="step2" class="container mt-5 d-none">
-  <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
-  <div class="d-flex justify-content-between mb-4 small text-muted">
-    <span>1. Fixtures</span>
-    <strong>2. Layout</strong>
-    <span>3. Dimensions</span>
-    <span>4. Quote</span>
-  </div>
-
-  <div class="hero-small mb-4">
-    <h2>Select Layout</h2>
-    <p class="text-white-50">Choose the configuration that best fits your space. Toggle ADA to see compliant options.</p>
-  </div>
-
-  <div class="toggle-group">
-    <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" id="toggleADA" checked onchange="filterLayouts()">
-      <label class="form-check-label" for="toggleADA">ADA Layouts</label>
-    </div>
-    <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" id="toggleNonADA" checked onchange="filterLayouts()">
-      <label class="form-check-label" for="toggleNonADA">Non-ADA Layouts</label>
-    </div>
-  </div>
-
-  <div id="layoutGrid" class="row g-3 justify-content-center mx-auto" style="max-width: 1200px;">
-    <!-- Full restored layout cards from your pictures -->
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-closed-ada-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+Closed%2C+ADA%2C+Left" class="card-img-top" alt="Alcove Closed, ADA, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove Closed, ADA, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-closed-ada-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+Closed%2C+ADA%2C+Right" class="card-img-top" alt="Alcove Closed, ADA, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove Closed, ADA, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-open-ada-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+Open%2C+ADA%2C+Left" class="card-img-top" alt="Alcove Open, ADA, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove Open, ADA, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-open-ada-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+Open%2C+ADA%2C+Right" class="card-img-top" alt="Alcove Open, ADA, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove Open, ADA, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-panel-closed-ada-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+With+Panel+Closed%2C+ADA%2C+Left" class="card-img-top" alt="Alcove With Panel Closed, ADA, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove With Panel Closed, ADA, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-panel-closed-ada-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+With+Panel+Closed%2C+ADA%2C+Right" class="card-img-top" alt="Alcove With Panel Closed, ADA, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove With Panel Closed, ADA, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-panel-open-ada-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+With+Panel+Open%2C+ADA%2C+Left" class="card-img-top" alt="Alcove With Panel Open, ADA, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove With Panel Open, ADA, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-panel-open-ada-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+With+Panel+Open%2C+ADA%2C+Right" class="card-img-top" alt="Alcove With Panel Open, ADA, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove With Panel Open, ADA, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="free-standing-ada-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Free+Standing%2C+ADA%2C+Left" class="card-img-top" alt="Free Standing, ADA, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Free Standing, ADA, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="free-standing-ada-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Free+Standing%2C+ADA%2C+Right" class="card-img-top" alt="Free Standing, ADA, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Free Standing, ADA, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="between-walls-ada-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Between+Walls%2C+ADA%2C+Left" class="card-img-top" alt="Between Walls, ADA, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Between Walls, ADA, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="between-walls-ada-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Between+Walls%2C+ADA%2C+Right" class="card-img-top" alt="Between Walls, ADA, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Between Walls, ADA, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="corner-ada-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Corner%2C+ADA%2C+Left" class="card-img-top" alt="Corner, ADA, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Corner, ADA, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
-      <button class="btn-layout w-100 h-100" data-layout="corner-ada-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Corner%2C+ADA%2C+Right" class="card-img-top" alt="Corner, ADA, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Corner, ADA, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-
-    <!-- Non-ADA -->
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-closed-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+Closed%2C+Left" class="card-img-top" alt="Alcove Closed, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove Closed, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-closed-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+Closed%2C+Right" class="card-img-top" alt="Alcove Closed, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove Closed, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-open-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+Open%2C+Left" class="card-img-top" alt="Alcove Open, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove Open, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-open-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+Open%2C+Right" class="card-img-top" alt="Alcove Open, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove Open, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-panel-closed-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+With+Panel+Closed%2C+Left" class="card-img-top" alt="Alcove With Panel Closed, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove With Panel Closed, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-panel-closed-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+With+Panel+Closed%2C+Right" class="card-img-top" alt="Alcove With Panel Closed, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove With Panel Closed, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-panel-open-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+With+Panel+Open%2C+Left" class="card-img-top" alt="Alcove With Panel Open, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove With Panel Open, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="alcove-panel-open-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Alcove+With+Panel+Open%2C+Right" class="card-img-top" alt="Alcove With Panel Open, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Alcove With Panel Open, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="between-walls">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Between+Walls" class="card-img-top" alt="Between Walls" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Between Walls</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="corner-left">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Corner%2C+Left" class="card-img-top" alt="Corner, Left" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Corner, Left</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="corner-right">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Corner%2C+Right" class="card-img-top" alt="Corner, Right" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Corner, Right</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-    <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
-      <button class="btn-layout w-100 h-100" data-layout="free-standing">
-        <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
-          <img src="https://placehold.co/400x240?text=Free+Standing" class="card-img-top" alt="Free Standing" loading="lazy">
-          <div class="card-body p-3 text-center">
-            <h6 class="fw-medium mb-1">Free Standing</h6>
-          </div>
-        </div>
-      </button>
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-between mt-5">
-    <button class="btn btn-outline-secondary btn-lg" onclick="showStep(1)">Back</button>
-    <button id="next2" class="btn btn-primary btn-lg" disabled onclick="showStep(3)">Next: Dimensions →</button>
-  </div>
-</div>
-
-<div id="step3" class="container mt-5 d-none">
-  <div class="progress"><div class="progress-bar" style="width:75%"></div></div>
-  <div class="d-flex justify-content-between mb-4 small text-muted">
-    <span>1. Fixtures</span>
-    <span>2. Layout</span>
-    <strong>3. Enter Dimensions</strong>
-    <span>4. Quote</span>
-  </div>
-
-  <div class="hero-small mb-4">
-    <h2>Enter Dimensions</h2>
-    <p>Customize stall sizes. Preview updates live.</p>
-  </div>
-
-  <div class="card p-4 mb-4">
-    <div class="row mb-3 align-items-center">
-      <div class="col-md-12">
-        <label class="form-label fw-bold">Room Name</label>
-        <input type="text" class="form-control" id="roomNameDimensions" value="Untitled" placeholder="Untitled">
-      </div>
-    </div>
-
-    <div class="toggle-group">
-      <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="perStallToggle" checked onchange="togglePerStall()">
-        <label class="form-check-label fw-bold" for="perStallToggle">Customize each stall individually</label>
-      </div>
-    </div>
-
-    <div class="row mb-4" id="stallSelectorRow">
-      <div class="col-md-6">
-        <label class="form-label fw-bold">Select Stall to Customize</label>
-        <select class="form-select form-select-lg" id="stallSelector" onchange="updateSelectedStall()">
-          <!-- Filled by JS -->
-        </select>
-      </div>
-    </div>
-
-    <div id="stallInputs">
-      <!-- Filled by JS -->
-    </div>
-
-    <div class="text-center mt-4">
-      <button class="btn btn-primary btn-lg" onclick="showStep(4)">Continue</button>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-lg-12">
-      <div class="card p-4 text-center">
-        <h4>Live Preview</h4>
-        <canvas id="previewCanvas"></canvas>
-        <p class="text-muted small mt-2">Top-down view with dimension labels (selected stall highlighted)</p>
+    <!-- Sidebar like One Point example -->
+    <div class="col-lg-4 d-none d-lg-block">
+      <div class="card p-4 bg-light border-0 shadow-sm">
+        <h4 class="text-primary">Get a Quote</h4>
+        <p class="text-muted">Skip the wait! Get instant pricing with our innovative bathroom partitions tool now!</p>
+        <hr>
+        <h5>Do you have questions?</h5>
+        <p class="mb-1"><strong>Call:</strong> <a href="tel:8665311952">866-531-1952</a></p>
+        <p><strong>Email:</strong> <a href="mailto:sales@onepointpartitions.com">sales@onepointpartitions.com</a></p>
       </div>
     </div>
   </div>
 </div>
 
-<div id="step4" class="container mt-5 d-none">
-  <div class="progress"><div class="progress-bar" style="width:100%"></div></div>
-  <div class="d-flex justify-content-between mb-4 small text-muted">
-    <span>1. Fixtures</span>
-    <span>2. Layout</span>
-    <span>3. Dimensions</span>
-    <strong>4. Get Quote</strong>
-  </div>
-  <div class="hero-small mb-4">
-    <h2>Get Your Quote</h2>
-    <p>Review and submit for pricing.</p>
-  </div>
-  <div class="card p-4">
-    <h4>Configuration Summary</h4>
-    <ul class="list-group list-group-flush mb-4">
-      <li class="list-group-item"><strong>Room Name:</strong> <span id="sumRoomName">Untitled</span></li>
-      <li class="list-group-item"><strong>Toilets:</strong> <span id="sumToilets">2</span></li>
-      <li class="list-group-item"><strong>Urinals:</strong> <span id="sumUrinals">0</span></li>
-      <li class="list-group-item"><strong>Layout:</strong> <span id="sumLayout">Not selected</span></li>
-      <li class="list-group-item"><strong>Room Size:</strong> <span id="sumSize">120" × 96"</span></li>
-      <li class="list-group-item"><strong>ADA:</strong> <span id="sumADA">Yes</span></li>
-    </ul>
-    <button class="btn btn-primary btn-lg w-100" onclick="alert('Quote request submitted! (demo mode) We\'ll email you details soon.')">Submit Quote</button>
-  </div>
-</div>
+<!-- Your Step 2, Step 3, Step 4 code here - paste from your last working version if needed -->
 
 <script>
-  let numToilets = 2;
-  let selectedStall = 1;
-  const stallData = [];
+  function changeToiletCount(delta) {
+    let count = parseInt(document.getElementById('toiletDisplay').textContent) || 2;
+    count = Math.max(1, Math.min(8, count + delta));
+    document.getElementById('toiletDisplay').textContent = count;
+    document.getElementById('toilets').value = count;
+    updateToiletCount();
+    updateToiletIcons();
+  }
+
+  function updateToiletIcons() {
+    const count = parseInt(document.getElementById('toilets').value) || 2;
+    const container = document.getElementById('toiletIcons');
+    container.innerHTML = '';
+
+    for (let i = 1; i <= count; i++) {
+      const img = document.createElement('img');
+      img.src = `https://placehold.co/80x120?text=Toilet+${i}&font=roboto`;
+      img.alt = `Toilet ${i}`;
+      img.style.width = '80px';
+      img.style.height = 'auto';
+      container.appendChild(img);
+    }
+  }
 
   function showStep(n) {
     document.querySelectorAll('[id^="step"]').forEach(el => el.classList.add('d-none'));
     document.getElementById('step' + n).classList.remove('d-none');
-    if (n === 3) {
-      updateToiletCount();
-      initializeStallData();
-      populateStallSelector();
-      updateSelectedStall();
-    }
   }
 
-  function updateToiletCount() {
-    numToilets = parseInt(document.getElementById('toilets').value) || 2;
-  }
-
-  function initializeStallData() {
-    stallData.length = 0;
-    for (let i = 0; i < numToilets; i++) {
-      stallData.push({
-        depth: 62,
-        width: 36,
-        doorOpening: 24,
-        doorSwing: 'Right In'
-      });
-    }
-  }
-
-  function populateStallSelector() {
-    const select = document.getElementById('stallSelector');
-    select.innerHTML = '';
-    for (let i = 1; i <= numToilets; i++) {
-      const opt = document.createElement('option');
-      opt.value = i;
-      opt.text = `Stall ${i}`;
-      select.appendChild(opt);
-    }
-    selectedStall = 1;
-  }
-
-  function updateSelectedStall() {
-    selectedStall = parseInt(document.getElementById('stallSelector').value);
-    const stall = stallData[selectedStall - 1];
-
-    document.getElementById('stallInputs').innerHTML = `
-      <h5>Customize Stall ${selectedStall}</h5>
-      <div class="row g-3">
-        <div class="col-md-6">
-          <label class="form-label">Partition Depth (inches)</label>
-          <input type="number" class="form-control" value="${stall.depth}" min="48" oninput="updateStallData('depth', this.value)">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Stall Width (inches)</label>
-          <input type="number" class="form-control" value="${stall.width}" min="30" oninput="updateStallData('width', this.value)">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Door Opening (inches)</label>
-          <input type="number" class="form-control" value="${stall.doorOpening}" min="18" oninput="updateStallData('doorOpening', this.value)">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label">Door Swing</label>
-          <select class="form-select" onchange="updateStallData('doorSwing', this.value)">
-            <option ${stall.doorSwing === 'Right In' ? 'selected' : ''}>Right In</option>
-            <option ${stall.doorSwing === 'Left In' ? 'selected' : ''}>Left In</option>
-            <option ${stall.doorSwing === 'Right Out' ? 'selected' : ''}>Right Out</option>
-            <option ${stall.doorSwing === 'Left Out' ? 'selected' : ''}>Left Out</option>
-          </select>
-        </div>
-      </div>
-    `;
-    drawPreview();
-  }
-
-  function updateStallData(key, value) {
-    stallData[selectedStall - 1][key] = parseInt(value) || value;
-    drawPreview();
-  }
-
-  const canvas = document.getElementById('previewCanvas');
-  const ctx = canvas ? canvas.getContext('2d') : null;
-
-  function drawPreview() {
-    if (!ctx) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    const roomLength = 120;
-    const roomWidth = 96;
-    const scale = Math.min(canvas.width / (roomLength + 40), canvas.height / (roomWidth + 40)) * 0.8;
-
-    ctx.strokeStyle = '#00008b';
-    ctx.lineWidth = 4;
-    ctx.strokeRect(20, 20, roomLength * scale, roomWidth * scale);
-
-    let xOffset = 40;
-    stallData.forEach((stall, index) => {
-      const width = parseInt(stall.width) || 36;
-      const depth = parseInt(stall.depth) || 62;
-      const doorOpening = parseInt(stall.doorOpening) || 24;
-      const isSelected = (index + 1 === selectedStall);
-
-      ctx.fillStyle = isSelected ? '#ffdddd' : '#add8e6';
-      ctx.fillRect(xOffset, 20 + (roomWidth * scale - depth * scale), width * scale, depth * scale);
-      ctx.strokeRect(xOffset, 20 + (roomWidth * scale - depth * scale), width * scale, depth * scale);
-
-      ctx.fillStyle = '#ffffff';
-      ctx.beginPath();
-      ctx.arc(xOffset + (width / 2) * scale, 20 + (roomWidth * scale - depth / 2 * scale), 12, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = '#000';
-      ctx.font = '12px Arial';
-      ctx.fillText(`${index + 1}`, xOffset + (width / 2 * scale) - 5, 20 + (roomWidth * scale - depth / 2 * scale) + 5);
-
-      ctx.strokeStyle = 'red';
-      ctx.lineWidth = 2;
-      // Depth
-      ctx.beginPath();
-      ctx.moveTo(xOffset + width * scale + 10, 20 + (roomWidth * scale - depth * scale));
-      ctx.lineTo(xOffset + width * scale + 10, 20 + roomWidth * scale);
-      ctx.moveTo(xOffset + width * scale + 5, 20 + (roomWidth * scale - depth * scale) + 5);
-      ctx.lineTo(xOffset + width * scale + 15, 20 + (roomWidth * scale - depth * scale) + 5);
-      ctx.stroke();
-      ctx.fillText(`${depth}"`, xOffset + width * scale + 15, 20 + (roomWidth * scale - depth * scale / 2));
-
-      // Width
-      ctx.beginPath();
-      ctx.moveTo(xOffset, 20 + roomWidth * scale + 10);
-      ctx.lineTo(xOffset + width * scale, 20 + roomWidth * scale + 10);
-      ctx.moveTo(xOffset + 5, 20 + roomWidth * scale + 5);
-      ctx.lineTo(xOffset + 5, 20 + roomWidth * scale + 15);
-      ctx.stroke();
-      ctx.fillText(`${width}"`, xOffset + width * scale / 2, 20 + roomWidth * scale + 25);
-
-      // Door opening
-      ctx.beginPath();
-      ctx.moveTo(xOffset + width * scale - doorOpening * scale, 20 + roomWidth * scale - depth * scale + 10);
-      ctx.lineTo(xOffset + width * scale, 20 + roomWidth * scale - depth * scale + 10);
-      ctx.stroke();
-      ctx.fillText(`${doorOpening}"`, xOffset + width * scale - doorOpening * scale / 2, 20 + roomWidth * scale - depth * scale);
-
-      xOffset += width * scale + 20 * scale;
-    });
-
-    ctx.fillStyle = '#000';
-    ctx.font = '14px Arial';
-    ctx.fillText(`Room: ${roomLength}" x ${roomWidth}"`, 30, 15);
-  }
-
-  document.querySelectorAll('.btn-layout').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.btn-layout .card').forEach(c => c.classList.remove('selected'));
-      btn.querySelector('.card').classList.add('selected');
-      document.getElementById('next2').disabled = false;
-    });
-  });
-
-  function filterLayouts() {
-    const showADA = document.getElementById('toggleADA').checked;
-    const showNonADA = document.getElementById('toggleNonADA').checked;
-
-    document.querySelectorAll('.layout-card').forEach(card => {
-      const isADA = card.dataset.ada === 'true';
-      card.style.display = ((showADA && isADA) || (showNonADA && !isADA) || (!showADA && !showNonADA)) ? 'block' : 'none';
-    });
-  }
+  // ... (keep your other functions: updateToiletCount, filterLayouts, drawPreview, etc.)
 
   window.addEventListener('load', () => {
+    updateToiletIcons();
     showStep(1);
-    drawPreview();
-    filterLayouts();
+    // drawPreview(); filterLayouts(); - add if needed
   });
 </script>
 </body>
