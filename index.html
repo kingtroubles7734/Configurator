@@ -15,8 +15,8 @@
     .selected { border: 3px solid #0d6efd !important; box-shadow: 0 8px 25px rgba(13,110,253,0.3) !important; }
     .hero-small { background: #0d6efd; color: white; padding: 2rem 1rem; text-align: center; border-radius: 12px; }
     .form-label { font-weight: 500; color: #333; }
-    #previewCanvas { border: 2px solid #0d6efd; background: #ffffff; border-radius: 8px; width: 100%; height: 500px; }
-    .toggle-group { display: flex; justify-content: center; margin-bottom: 1.5rem; }
+    #previewCanvas { border: 2px solid #0d6efd; background: #e9f5ff; border-radius: 8px; width: 100%; height: 400px; }
+    .toggle-group { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
   </style>
 </head>
 <body>
@@ -38,23 +38,23 @@
   <div class="row justify-content-center">
     <div class="col-lg-8">
       <div class="card p-4">
-        <div class="mb-4 text-center">
-          <label class="form-label fw-bold d-block mb-3">How many stalls?</label>
-          <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
-            <button class="btn btn-outline-secondary btn-lg" onclick="changeToiletCount(-1)">-</button>
-            <div class="display-4 fw-bold" id="toiletDisplay">2</div>
-            <button class="btn btn-outline-secondary btn-lg" onclick="changeToiletCount(1)">+</button>
-          </div>
-
-          <!-- Dynamic toilet icons -->
-          <div class="d-flex flex-wrap justify-content-center gap-3 mb-4" id="toiletIcons">
-            <!-- Filled by JS -->
-          </div>
-        </div>
-
         <div class="mb-4">
           <label class="form-label fw-bold">Name your room (optional)</label>
           <input type="text" class="form-control form-control-lg" id="roomName" placeholder="e.g., Main Restroom">
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-bold">Number of Toilets</label>
+          <select class="form-select form-select-lg" id="toilets" onchange="updateToiletCount()">
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
         </div>
 
         <div class="mb-4">
@@ -81,18 +81,6 @@
         <div class="text-center">
           <button class="btn btn-primary btn-lg" onclick="showStep(2)">Next: Select Layout →</button>
         </div>
-      </div>
-    </div>
-
-    <!-- Sidebar - Get a Quote & contact -->
-    <div class="col-lg-4 d-none d-lg-block">
-      <div class="card p-4 bg-light border-0 shadow-sm">
-        <h4 class="text-primary">Get a Quote</h4>
-        <p class="text-muted">Skip the wait! Get instant pricing with our innovative bathroom partitions tool now!</p>
-        <hr>
-        <h5>Do you have questions?</h5>
-        <p class="mb-1"><strong>Call:</strong> <a href="tel:8665311952">866-531-1952</a></p>
-        <p><strong>Email:</strong> <a href="mailto:sales@onepointpartitions.com">sales@onepointpartitions.com</a></p>
       </div>
     </div>
   </div>
@@ -124,7 +112,7 @@
   </div>
 
   <div id="layoutGrid" class="row g-3 justify-content-center mx-auto" style="max-width: 1200px;">
-    <!-- Full layout options restored + expanded from your pictures -->
+    <!-- Full restored layout cards from your pictures -->
     <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="true">
       <button class="btn-layout w-100 h-100" data-layout="alcove-closed-ada-left">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -266,7 +254,7 @@
       </button>
     </div>
 
-    <!-- Non-ADA layouts -->
+    <!-- Non-ADA -->
     <div class="col-6 col-md-4 col-lg-3 layout-card" data-ada="false">
       <button class="btn-layout w-100 h-100" data-layout="alcove-closed-left">
         <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden">
@@ -568,11 +556,10 @@
     if (!ctx) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    const roomLength = 120; // can pull from input if added
+    const roomLength = 120;
     const roomWidth = 96;
     const scale = Math.min(canvas.width / (roomLength + 40), canvas.height / (roomWidth + 40)) * 0.8;
 
-    // Room outline
     ctx.strokeStyle = '#00008b';
     ctx.lineWidth = 4;
     ctx.strokeRect(20, 20, roomLength * scale, roomWidth * scale);
@@ -584,23 +571,19 @@
       const doorOpening = parseInt(stall.doorOpening) || 24;
       const isSelected = (index + 1 === selectedStall);
 
-      // Stall box
       ctx.fillStyle = isSelected ? '#ffdddd' : '#add8e6';
       ctx.fillRect(xOffset, 20 + (roomWidth * scale - depth * scale), width * scale, depth * scale);
       ctx.strokeRect(xOffset, 20 + (roomWidth * scale - depth * scale), width * scale, depth * scale);
 
-      // Toilet
       ctx.fillStyle = '#ffffff';
       ctx.beginPath();
       ctx.arc(xOffset + (width / 2) * scale, 20 + (roomWidth * scale - depth / 2 * scale), 12, 0, Math.PI * 2);
       ctx.fill();
 
-      // Stall number
       ctx.fillStyle = '#000';
       ctx.font = '12px Arial';
       ctx.fillText(`${index + 1}`, xOffset + (width / 2 * scale) - 5, 20 + (roomWidth * scale - depth / 2 * scale) + 5);
 
-      // Red arrows
       ctx.strokeStyle = 'red';
       ctx.lineWidth = 2;
       // Depth
