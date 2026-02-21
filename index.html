@@ -17,8 +17,8 @@
     .form-label { font-weight: 500; color: #333; }
     #previewCanvas { border: 2px solid #0d6efd; background: #e9f5ff; border-radius: 8px; width: 100%; height: 400px; }
     .toggle-group { display: flex; justify-content: center; gap: 2rem; margin-bottom: 1.5rem; }
-    .toilet-icon { width: 80px; height: auto; }
-    .counter-btn { width: 50px; height: 50px; font-size: 1.5rem; }
+    .toilet-icon { width: 80px; height: auto; border-radius: 8px; }
+    .counter-btn { width: 60px; height: 60px; font-size: 1.8rem; line-height: 1; }
   </style>
 </head>
 <body>
@@ -42,15 +42,15 @@
       <div class="card p-4">
         <div class="mb-4 text-center">
           <label class="form-label fw-bold d-block mb-3">How many stalls?</label>
-          <div class="d-flex justify-content-center align-items-center gap-3 mb-4">
-            <button class="btn btn-outline-secondary counter-btn" onclick="changeToiletCount(-1)">-</button>
-            <div class="display-4 fw-bold mx-4" id="toiletDisplay">2</div>
-            <button class="btn btn-outline-secondary counter-btn" onclick="changeToiletCount(1)">+</button>
+          <div class="d-flex justify-content-center align-items-center gap-4 mb-5">
+            <button class="btn btn-outline-primary counter-btn rounded-circle" onclick="changeToiletCount(-1)">−</button>
+            <div class="display-3 fw-bold text-primary" id="toiletDisplay">2</div>
+            <button class="btn btn-outline-primary counter-btn rounded-circle" onclick="changeToiletCount(1)">+</button>
           </div>
 
-          <!-- Toilet icons container -->
-          <div class="d-flex flex-wrap justify-content-center gap-4 mb-4" id="toiletIcons">
-            <!-- JS will insert img tags here -->
+          <!-- Toilet icons appear here -->
+          <div class="d-flex flex-wrap justify-content-center gap-4 mb-4" id="toiletIcons" style="min-height: 120px;">
+            <!-- JS inserts images -->
           </div>
         </div>
 
@@ -81,26 +81,62 @@
         </div>
 
         <div class="text-center">
-          <button class="btn btn-primary btn-lg" onclick="showStep(2)">Next: Select Layout →</button>
+          <button class="btn btn-primary btn-lg px-5" onclick="showStep(2)">Next: Select Layout →</button>
         </div>
       </div>
     </div>
 
-    <!-- Sidebar like One Point -->
+    <!-- Sidebar -->
     <div class="col-lg-4 d-none d-lg-block">
-      <div class="card p-4 bg-light border-0 shadow-sm">
-        <h4 class="text-primary">Get a Quote</h4>
+      <div class="card p-4 bg-white border-0 shadow-sm rounded-3">
+        <h4 class="text-primary mb-3">Get a Quote</h4>
         <p class="text-muted">Skip the wait! Get instant pricing with our innovative bathroom partitions tool now!</p>
-        <hr>
-        <h5>Do you have questions?</h5>
-        <p class="mb-1"><strong>Call:</strong> <a href="tel:8665311952">866-531-1952</a></p>
-        <p><strong>Email:</strong> <a href="mailto:sales@onepointpartitions.com">sales@onepointpartitions.com</a></p>
+        <hr class="my-4">
+        <h5 class="mb-3">Do you have questions?</h5>
+        <p class="mb-2"><strong>Call:</strong> <a href="tel:8665311952" class="text-primary">866-531-1952</a></p>
+        <p><strong>Email:</strong> <a href="mailto:sales@onepointpartitions.com" class="text-primary">sales@onepointpartitions.com</a></p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Paste your Step 2, Step 3, Step 4 code here if different - assuming previous version -->
+<!-- Step 2 layouts (full from previous) -->
+<div id="step2" class="container mt-5 d-none">
+  <div class="progress"><div class="progress-bar" style="width:50%"></div></div>
+  <div class="d-flex justify-content-between mb-4 small text-muted">
+    <span>1. Fixtures</span>
+    <strong>2. Layout</strong>
+    <span>3. Dimensions</span>
+    <span>4. Quote</span>
+  </div>
+
+  <div class="hero-small mb-4">
+    <h2>Select Layout</h2>
+    <p class="text-white-50">Choose the configuration that best fits your space. Toggle ADA to see compliant options.</p>
+  </div>
+
+  <div class="toggle-group">
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="toggleADA" checked onchange="filterLayouts()">
+      <label class="form-check-label" for="toggleADA">ADA Layouts</label>
+    </div>
+    <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" id="toggleNonADA" checked onchange="filterLayouts()">
+      <label class="form-check-label" for="toggleNonADA">Non-ADA Layouts</label>
+    </div>
+  </div>
+
+  <div id="layoutGrid" class="row g-3 justify-content-center mx-auto" style="max-width: 1200px;">
+    <!-- Your full layout cards here - add them as before -->
+  </div>
+
+  <div class="d-flex justify-content-between mt-5">
+    <button class="btn btn-outline-secondary btn-lg" onclick="showStep(1)">Back</button>
+    <button id="next2" class="btn btn-primary btn-lg" disabled onclick="showStep(3)">Next: Dimensions →</button>
+  </div>
+</div>
+
+<!-- Step 3 and Step 4 - paste your previous versions if customized -->
 
 <script>
   function changeToiletCount(delta) {
@@ -108,7 +144,6 @@
     count = Math.max(1, Math.min(8, count + delta));
     document.getElementById('toiletDisplay').textContent = count;
     document.getElementById('toilets').value = count;
-    updateToiletCount();
     updateToiletIcons();
   }
 
@@ -116,10 +151,9 @@
     const count = parseInt(document.getElementById('toilets').value) || 2;
     const container = document.getElementById('toiletIcons');
     container.innerHTML = '';
-
     for (let i = 1; i <= count; i++) {
       const img = document.createElement('img');
-      img.src = `https://placehold.co/80x120/cccccc/000000?text=Toilet+${i}&font=roboto`;
+      img.src = `https://placehold.co/80x120/cccccc/000000/png?text=Toilet+${i}&font=roboto`;
       img.alt = `Toilet ${i}`;
       img.className = 'toilet-icon';
       container.appendChild(img);
@@ -132,12 +166,11 @@
     if (target) target.classList.remove('d-none');
   }
 
-  // Your other functions (updateToiletCount, filterLayouts, drawPreview, etc.) go here...
+  // Add your other JS functions here (updateToiletCount, filterLayouts, drawPreview, etc.)
 
   window.addEventListener('load', () => {
     updateToiletIcons();
     showStep(1);
-    // drawPreview(); filterLayouts(); - add if you have these
   });
 </script>
 </body>
